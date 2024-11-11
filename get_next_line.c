@@ -12,4 +12,9 @@ char *get_next_line(int fd)
 		ft_printf("%c", buffer[i]);
 		i++;
 	}
+	if(buffer[i] != '\n')
+	{
+		i++;
+		buffer[i] = '\n';
+	}
 }
