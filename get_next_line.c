@@ -18,3 +18,17 @@ char *get_next_line(int fd)
 		buffer[i] = '\n';
 	}
 }
+
+getnextline
+get file and read line by line 
+fd 
+ a = strsearch: if nl 
+	strcut till nl
+	rest in static char*
+else 
+	strlen
+	malloc str
+	reread with buffer
+	a 
+	strjoin bis newline
+return str
