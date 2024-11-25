@@ -6,7 +6,7 @@
 /*   By: fkonig <fkonig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:56:44 by fkonig            #+#    #+#             */
-/*   Updated: 2024/11/25 12:58:08 by fkonig           ###   ########.fr       */
+/*   Updated: 2024/11/25 16:01:50 by fkonig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # ifndef BUFFER_SIZE
-# define BUFFER_SIZE 10
+#  define BUFFER_SIZE 5
 # endif
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);

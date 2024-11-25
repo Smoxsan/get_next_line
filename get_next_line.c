@@ -6,7 +6,7 @@
 /*   By: fkonig <fkonig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:56:54 by fkonig            #+#    #+#             */
-/*   Updated: 2024/11/25 12:56:39 by fkonig           ###   ########.fr       */
+/*   Updated: 2024/11/25 16:00:02 by fkonig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*reader(int fd, char *buffer, char *line)
 	{
 		byt = read (fd, buffer, BUFFER_SIZE);
 		if (byt == -1)
-			return (free(line), NULL);
+			return (free(line), buffer[0] = '\0', NULL);
 		buffer[byt] = '\0';
 		line = ft_strjoin(line, buffer);
 		if (ft_strlen(line) == 0)
