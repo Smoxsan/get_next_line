@@ -6,7 +6,7 @@
 /*   By: fkonig <fkonig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:56:54 by fkonig            #+#    #+#             */
-/*   Updated: 2024/11/25 16:00:02 by fkonig           ###   ########.fr       */
+/*   Updated: 2024/12/16 16:23:45 by fkonig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
-#include <fcntl.h>  // For non-blocking file descriptor flags
+#include <fcntl.h>
 
 static char	*reader(int fd, char *buffer, char *line)
 {
@@ -27,31 +27,31 @@ static char	*reader(int fd, char *buffer, char *line)
 		if (byt == -1)
 			return (free(line), buffer[0] = '\0', NULL);
 		buffer[byt] = '\0';
-		line = ft_strjoin(line, buffer);
-		if (ft_strlen(line) == 0)
+		line = ft_strjoin(line, buffer); //tt
+		if (line == NULL || ft_strlen(line) == 0)
 			return (free(line), NULL);
 	}
 	return (line);
 }
 
-static char	*remaining(char *nl, char *l, char *buffer)
-{
-	size_t	line_length;
+// static char	*remaining(char *nl, char *buffer, char *l)
+// {
+// 	size_t	line_length;
 
-	nl = ft_strchr(l, '\n');
-	if (nl)
-	{
-		line_length = nl - l + 1;
-		ft_strlcpy(buffer, nl + 1, BUFFER_SIZE + 1);
-	}
-	else
-	{
-		line_length = ft_strlen(l);
-		buffer[0] = '\0';
-	}
-	l[line_length] = '\0';
-	return (buffer);
-}
+// 	nl = ft_strchr(l, '\n');
+// 	if (nl)
+// 	{
+// 		line_length = nl - l + 1;
+// 		ft_strlcpy(buffer, nl + 1, BUFFER_SIZE + 1);
+// 	}
+// 	else
+// 	{
+// 		line_length = ft_strlen(l);
+// 		buffer = NULL;
+// 	}
+// 	l[line_length] = '\0';
+// 	return (buffer);
+// }
 
 char	*get_next_line(int fd)
 {
@@ -62,13 +62,26 @@ char	*get_next_line(int fd)
 	nextl = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	line = ft_strdup(buffer);
+	line = ft_strdup(buffer); //tt
 	if (!line)
 		return (free(line), NULL);
 	line = reader(fd, buffer, line);
 	if (!line)
-		return (NULL);
-	remaining(nextl, line, buffer);
+		return (free(line), NULL);
+	size_t	line_length;
+
+	nextl = ft_strchr(line, '\n');
+	if (nextl)
+	{
+		line_length = nextl - line + 1;
+		ft_strlcpy(buffer, nextl + 1, BUFFER_SIZE + 1);
+	}
+	else
+	{
+		line_length = ft_strlen(line);
+		//buffer = NULL;
+	}
+	line[line_length] = '\0';
 	return (line);
 }
 

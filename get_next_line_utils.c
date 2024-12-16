@@ -6,7 +6,7 @@
 /*   By: fkonig <fkonig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:03:34 by fkonig            #+#    #+#             */
-/*   Updated: 2024/11/25 12:51:14 by fkonig           ###   ########.fr       */
+/*   Updated: 2024/12/13 13:11:23 by fkonig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*ft_strdup(const char *str)
 	size_t	len;
 
 	len = ft_strlen(str) + 1;
-	ptr = malloc(len);
+	ptr = (char *)malloc(len);
 	if (!ptr)
 		return (NULL);
 	ft_strlcpy(ptr, str, len);
@@ -60,9 +60,8 @@ int	ft_strlen(const char *str)
 	int	i;
 
 	i = 0;
-	while (*str)
+	while (str[i])
 	{
-		str++;
 		i++;
 	}
 	return (i);
@@ -74,19 +73,17 @@ char	*ft_strjoin(char *s1, char const *s2)
 	int		l2;
 	char	*result;
 
+	l1 = 0;
+	l2 = 0;
 	if (!s1 && !s2)
 		return (NULL);
-	if (!s1)
-		return (ft_strdup(s2));
-	if (!s2)
-		return (ft_strdup(s1));
 	l1 = ft_strlen(s1);
 	l2 = ft_strlen(s2);
 	result = malloc(l1 + l2 + 1);
 	if (!result)
 		return (NULL);
 	ft_strlcpy(result, s1, l1 + 1);
-	ft_strlcpy((result + l1), s2, l2 + 1);
+	ft_strlcpy(result + l1, s2, l2 + 1);
 	free((void *)s1);
 	return (result);
 }
