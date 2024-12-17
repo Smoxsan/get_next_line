@@ -6,7 +6,7 @@
 /*   By: fkonig <fkonig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:56:54 by fkonig            #+#    #+#             */
-/*   Updated: 2024/12/16 16:23:45 by fkonig           ###   ########.fr       */
+/*   Updated: 2024/12/17 11:16:31 by fkonig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 
 static char	*reader(int fd, char *buffer, char *line)
 {
-	int	byt;
+	int		byt;
+	char	*buff;
 
 	byt = 1;
 	while (byt >= 1 && !(ft_strchr(line, '\n')))
@@ -27,62 +28,53 @@ static char	*reader(int fd, char *buffer, char *line)
 		if (byt == -1)
 			return (free(line), buffer[0] = '\0', NULL);
 		buffer[byt] = '\0';
-		line = ft_strjoin(line, buffer); //tt
+		buff = ft_strjoin(line, buffer);
+		free(line);
+		if (!buff)
+			return (NULL);
+		line = buff;
 		if (line == NULL || ft_strlen(line) == 0)
 			return (free(line), NULL);
 	}
 	return (line);
 }
 
-// static char	*remaining(char *nl, char *buffer, char *l)
-// {
-// 	size_t	line_length;
-
-// 	nl = ft_strchr(l, '\n');
-// 	if (nl)
-// 	{
-// 		line_length = nl - l + 1;
-// 		ft_strlcpy(buffer, nl + 1, BUFFER_SIZE + 1);
-// 	}
-// 	else
-// 	{
-// 		line_length = ft_strlen(l);
-// 		buffer = NULL;
-// 	}
-// 	l[line_length] = '\0';
-// 	return (buffer);
-// }
-
-char	*get_next_line(int fd)
+static char	*remaining(char *buffer, char *line)//**line
 {
-	static char	buffer[BUFFER_SIZE + 1];
-	char		*nextl;
-	char		*line;
-
-	nextl = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	line = ft_strdup(buffer); //tt
-	if (!line)
-		return (free(line), NULL);
-	line = reader(fd, buffer, line);
-	if (!line)
-		return (free(line), NULL);
 	size_t	line_length;
+	char	*nextl;
+	char	*temp;
 
 	nextl = ft_strchr(line, '\n');
+	buffer[0] = '\0';
+	temp = NULL;
+	line_length = 0;
 	if (nextl)
 	{
 		line_length = nextl - line + 1;
 		ft_strlcpy(buffer, nextl + 1, BUFFER_SIZE + 1);
+		nextl[1] = '\0';
+		temp = ft_strdup(line);
+		free(line);
+		return (temp);
 	}
-	else
-	{
-		line_length = ft_strlen(line);
-		//buffer = NULL;
-	}
-	line[line_length] = '\0';
 	return (line);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	buffer[BUFFER_SIZE + 1];
+	char		*line;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	line = ft_strdup(buffer);
+	if (!line)
+		return (NULL);
+	line = reader(fd, buffer, line);
+	if (!line)
+		return (free(line), NULL);
+	return (remaining(buffer, line));
 }
 
 // #include <fcntl.h>
@@ -91,7 +83,6 @@ char	*get_next_line(int fd)
 // {
 // 	char	*line;
 // 	int		fd;
-
 // 	fd = open("testfile.txt", O_RDONLY);
 // 	while ((line = get_next_line(fd)) != NULL)
 // 	{
@@ -101,58 +92,3 @@ char	*get_next_line(int fd)
 // 		printf("$\n");
 // 	close(fd);
 // }
-
-// 	s = ft_strndup(b, i);
-// 	if(!s)
-// 		return(free(s), s = NULL);
-// 	e = ft_strrchr(buffer, '\n');
-// 	while(e == 0)
-// 	{
-// 		reader(fd, b, s);
-// 	}
-// 	i = e - buffer;
-// }
-
-// char *t;
-// static char buffer;
-// int count;
-
-// count = 0;
-	// strjoin(c, t);
-	// while (buffer[i] != '\0')
-	// {
-	// 	read_bytes = read(fd, buffer, 300);
-	// 	ft_printf("%c", buffer[i]);
-	// 	i++;
-	// }
-	// if(buffer[i] != '\n')
-	// {
-	// 	i++;
-	// 	buffer[i] = '\n';
-	// }
-// int ex_newline(static char buffer[BUFFER_SIZE], int fd, char *b)
-// {
-// 	int i;
-// 	char *s;
-// 	char *e;
-
-// 	i = 0;
-// 	s = ft_strndup(b, i);
-// 	e = ft_strrchr(buffer, '\n');
-// 	while(e == 0)
-// 	{
-// 		reader
-// 	}
-// 	i = e - buffer;
-
-// 	return(s);
-// }
-	// if(e = ft_strrchr(buffer, '\n'))
-	// 	return()
-	// while()
-	// {
-	// 	buffer = read(fd, buffer, BUFFER_SIZE)
-	// 	i++;
-	// }
-	// s = buffer[0];
-	// e = ft_strrchr(buffer, '\n');

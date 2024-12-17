@@ -6,7 +6,7 @@
 /*   By: fkonig <fkonig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:03:34 by fkonig            #+#    #+#             */
-/*   Updated: 2024/12/13 13:11:23 by fkonig           ###   ########.fr       */
+/*   Updated: 2024/12/16 17:17:28 by fkonig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,5 @@ char	*ft_strjoin(char *s1, char const *s2)
 		return (NULL);
 	ft_strlcpy(result, s1, l1 + 1);
 	ft_strlcpy(result + l1, s2, l2 + 1);
-	free((void *)s1);
 	return (result);
 }
