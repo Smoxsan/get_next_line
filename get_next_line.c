@@ -6,7 +6,7 @@
 /*   By: fkonig <fkonig@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:56:54 by fkonig            #+#    #+#             */
-/*   Updated: 2024/12/17 11:16:31 by fkonig           ###   ########.fr       */
+/*   Updated: 2024/12/20 16:34:53 by fkonig           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*reader(int fd, char *buffer, char *line)
 	return (line);
 }
 
-static char	*remaining(char *buffer, char *line)//**line
+static char	*remaining(char *buffer, char *line)
 {
 	size_t	line_length;
 	char	*nextl;
